@@ -138,3 +138,7 @@ Servlet의 @WebServlet 어노테이션에 loadOnStartup=1 속성을 넣어주면
 
 ##### 6번. 필터 관련 문제
 Filter 인터페이스 구현체 CharacterEncodingFilter에 @WebFilter(urlPatterns="/*") annotation 적용
+
+##### 7번. 스클립틀릿 JSTL 및 EL로 변환 관련 문제
+
+해설 생략
