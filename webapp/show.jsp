@@ -64,8 +64,8 @@
 		                <div class="about">내용 : </div>
 		                ${each.contents }
 		            </div>
-		            <div>
-		            	<a href="#">삭제</a>
+		            <div class="delete-content">
+		            	<a href="#" data-answerNo="${each.answerId}" data-questionNo="${question.questionId}" >삭제</a>
 		            </div>
 		        </div>	    
 	    	</c:forEach>
