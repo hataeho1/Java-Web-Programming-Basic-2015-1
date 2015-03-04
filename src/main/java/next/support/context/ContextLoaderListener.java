@@ -2,6 +2,7 @@ package next.support.context;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import core.jdbc.ConnectionManager;
 
+@WebListener
 public class ContextLoaderListener implements ServletContextListener {
 	private static final Logger logger = LoggerFactory.getLogger(ContextLoaderListener.class);
 	
