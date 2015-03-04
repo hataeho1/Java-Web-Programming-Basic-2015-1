@@ -24,7 +24,34 @@
 	8. service() 메소드는 각 요청에 대해 새로운 스레드를 만들고 clinet의 request 방식(Get, Post 등..)을 확인하여 doXXX() 메소드를 실행시킵니다.
 
 ##### 3. Tomcat 서버를 시작한 후 http://localhost:8080으로 접근시 호출 순서 및 흐름을 설명하라.
-* 
+(이미 DispatcherServlet의 init()메소드가 호출되어 초기화 되어 있는 상태라고 가정하자)
+
+1. core.mvc 패키지 내의 DispatcherServlet 클래스에서 service 메소드가 클라이언트가 요청한 자원의 주소를 받는다
+	
+	```
+	String requestUri = req.getRequestURI();
+	```
+
+2. 이후 RequestMapping 클래스의 findController 메소드를 사용해 클라이언트가 요청한 주소에 대한 응답을 처리해줄 (Controller 인터페이스와 AbstractController 상속받아 구현된)컨트롤러 객체를 찾아서 controller 변수에 담아둔다.
+	
+	```
+	Controller controller = rm.findController(urlExceptParameter(req.getRequestURI()));
+
+	urlExceptParameter() 메소드는 파라미터를 제거해주는 역할을 한다.
+	```
+
+3. controller 변수에 묶여있는 컨트롤러 객체가 가지고 있는 execute 메소드를 실행한다.
+그 결과 mav라는 변수에는 요청에 대한 model과 view가 담긴 객체가 담기게 된다.
+
+	```
+	mav = controller.execute(req, resp);
+	```
+
+4. 이후 View 인터페이스를 구현한 클래스들의 render 메소드들이 실행되면 미리 생성되었던 view 객체의 필드에 생성자에 의해 미리 초기화 되어있던 viewName으로 forward하게 됨으로써 질문 목록이 보이게 된다
+
+	```
+	view.render(mav.getModel(), req, resp);
+	```
 
 ##### 10. ListController와 ShowController가 멀티 쓰레드 상황에서 문제가 발생하는 이유에 대해 설명하라.
 * 
@@ -77,5 +104,9 @@ next.support.context.ContextLoaderListener에 붙여준다
 
 
 ##### 2. Tomcat 서버를 시작할 때 웹 애플리케이션이 초기화하는 과정을 설명하라.
+
+위 답안 참고
+
+##### 3. Tomcat 서버를 시작한 후 http://localhost:8080으로 접근시 호출 순서 및 흐름을 설명하라.
 
 위 답안 참고
