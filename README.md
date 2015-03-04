@@ -1,10 +1,32 @@
-#### 2. Tomcat 서버를 시작할 때 웹 애플리케이션이 초기화하는 과정을 설명하라.
+##### 2. Tomcat 서버를 시작할 때 웹 애플리케이션이 초기화하는 과정을 설명하라.
+* Servlet Container인 톰캣은 WebServerLauncher에 의해 실행되자 마자 아래와 같은 순서를 거쳐 웹 어플리케이션 초기화 과정을 진행한다.
+
+	1. 배포서술자(web.xml)을 읽는다
+	2. Servlet Context 객체를 만든다
+	3. web.xml에 작성되어 있던 초기화 파라미터들을 객체에 설정한다
+	4. 서블릿 컨테이너는 컨텍스트가 초기화 또는 종료 될때 이벤트를 발생시키는데 이때 listner로 등록된 객체들에게 이벤트가 발생했음을 알려준다.
+	이 이벤트가 발생했음을 통보 받고싶은 객체는 listner로 미리 등록을 해 두어야 하는데 그 등록은 @WebListener 어노테이션을 이용해서 할 수 있다.<br>
+	(현재 next.support.context.ContextLoaderListener에 @WebListener 어노테이션이 작성되어 있다)
+	5. 서블릿 컨테이너는 컨텍스트가 초기화되는 시점, 즉 3번 과정이 완료되는 시점에 이벤트를 발생시키고 그 시점에 listener로 등록되어 있는 listener의 contextInitialized() 메소드를 실행시킨다. -> 이 과정에서 DB 초기화를 진행한다.
+	
+	6. 두가지 경우로 나뉨<br>
+	
+		만약 load-on-startup이 0 이 아닌 양수로 설정되어 있다면<br>
+			-> 모든 서블릿 클래스들을 찾고 로드하여 init() 메소드를 실행시킨다.
+		<br><br>
+		만약 load-on-startup이 0으로 설정되어 있거나 아예 설정한 적이 없는 경우<br>
+			-> 최초로 해당 서블릿에 대한 요청이 들어왔을떄 init() 메소드가 실행된다.
+
+		(7번 과정을 진핸하기 전에는 어떠한 경우에도 각 서블릿에 대해 init()메소드가 실행된 적이 있어야 합니다)<br>
+
+	7. 서블릿 컨테이너(톰캣)에 클라이언트가 요청을 보내면 서블릿 컨테이너는 init()메소드에 의해 초기화된 서블릿의 service() 메소드를 실행시킵니다.
+
+	8. service() 메소드는 각 요청에 대해 새로운 스레드를 만들고 clinet의 request 방식(Get, Post 등..)을 확인하여 doXXX() 메소드를 실행시킵니다.
+
+##### 3. Tomcat 서버를 시작한 후 http://localhost:8080으로 접근시 호출 순서 및 흐름을 설명하라.
 * 
 
-#### 3. Tomcat 서버를 시작한 후 http://localhost:8080으로 접근시 호출 순서 및 흐름을 설명하라.
-* 
-
-#### 10. ListController와 ShowController가 멀티 쓰레드 상황에서 문제가 발생하는 이유에 대해 설명하라.
+##### 10. ListController와 ShowController가 멀티 쓰레드 상황에서 문제가 발생하는 이유에 대해 설명하라.
 * 
 
 
@@ -12,8 +34,8 @@
 
 
 ---
-해설<br>
-1번. ContextLoaderListener 관련 문제
+####해설<br>
+#####1번. ContextLoaderListener 관련 문제
 
 [ Servlet Context 란? ]
 
@@ -52,3 +74,8 @@ Annotation을 이용한 더 쉬운 리스너 등록방법이 있어서 아래 �
 @WebListener 어노테이션을 ServletContextListener 인터페이스를 구현한
 next.support.context.ContextLoaderListener에 붙여준다 
 ```
+
+
+##### 2. Tomcat 서버를 시작할 때 웹 애플리케이션이 초기화하는 과정을 설명하라.
+
+위 답안 참고
