@@ -135,3 +135,6 @@ Servlet의 @WebServlet 어노테이션에 loadOnStartup=1 속성을 넣어주면
 ##### 5번. 질문하기 기능 추가 문제
 1. 우선 form 태그의 action속성에서 어느 uri를 가리키고 있는지 확인했음
 2. RequestMapping class로 가서 mapping Map에 주소 "/save.next" 와 컨트롤러 SaveController() 추가해줌
+
+##### 6번. 필터 관련 문제
+Filter 인터페이스 구현체 CharacterEncodingFilter에 @WebFilter(urlPatterns="/*") annotation 적용
