@@ -103,10 +103,31 @@ next.support.context.ContextLoaderListener에 붙여준다
 ```
 
 
-##### 2. Tomcat 서버를 시작할 때 웹 애플리케이션이 초기화하는 과정을 설명하라.
+##### 2번. Tomcat 서버를 시작할 때 웹 애플리케이션이 초기화하는 과정을 설명하라.
 
 위 답안 참고
 
-##### 3. Tomcat 서버를 시작한 후 http://localhost:8080으로 접근시 호출 순서 및 흐름을 설명하라.
+##### 3번. Tomcat 서버를 시작한 후 http://localhost:8080으로 접근시 호출 순서 및 흐름을 설명하라.
 
 위 답안 참고
+
+##### 4번. Servlet init() 메소드 호출 시점 관련 문제
+최초 접근하는 시점에 DispatcherServlet의 init() 메서드가 호출되어 RequestMapping이 초기화된다.<br>
+이와 같이 서 비스할 경우 서버 시작 후 동시 접속자가 많을 경우 성능상 이슈가 발생할 수 있다. -> Init() 메소드가 실행되는 동안 대기열 발생<br>
+Tomcat 서버를 시작하는 시점에 DispatcherServlet의 init() 메서드가 호출되어 초기화 가능하도록 설정한다.<br>
+
+Servlet의 @WebServlet 어노테이션에 loadOnStartup=1 속성을 넣어주면 됨<br>
+0 또는 설정값이 없을 때 = 최초요청이 들어왔을때 서블릿 초기화( init()메소드 호출 )<br>
+1 이상 = 0보다 큰값중에서 가장 낮은 수가 가장먼저 초기화 진행<br>
+
+만약 어노테이션 기반이 아니라 web.xml에 설정해주고 싶다면 아래와 같이 한다
+
+```
+예시 코드
+<servlet>
+    <servlet-name>Servlet</servlet-name>
+    <display-name>Apache Servlet</display-name>
+    <servlet-class>com.http.FrameworkServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+</servlet> 
+```
