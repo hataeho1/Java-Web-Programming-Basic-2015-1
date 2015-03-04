@@ -142,3 +142,8 @@ Filter 인터페이스 구현체 CharacterEncodingFilter에 @WebFilter(urlPatter
 ##### 7번. 스클립틀릿 JSTL 및 EL로 변환 관련 문제
 
 해설 생략
+
+##### 8번. AJAX 답변하기 기능 관련 문제
+1. RequestMapping class로 가서 mapping Map에 주소 "/api/addanswer.next" 와 컨트롤러 AnswerController() 추가해줌
+2. AnswerController() 작성
+3. DAO 메소드 하나 추가
