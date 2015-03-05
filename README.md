@@ -168,3 +168,7 @@ Filter 인터페이스 구현체 CharacterEncodingFilter에 @WebFilter(urlPatter
 ##### 10번. 멀티 쓰레드 상황에서 문제가 발생할 가능성 관련 문제
 
 위 답안 참고
+
+##### 11번. 모바일을 서비스를 위한 질문목록 데이터 JSON API 추가 문제
+
+해설 생략
