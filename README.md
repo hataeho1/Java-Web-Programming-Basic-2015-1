@@ -54,7 +54,20 @@
 	```
 
 ##### 10. ListController와 ShowController가 멀티 쓰레드 상황에서 문제가 발생하는 이유에 대해 설명하라.
-* 
+서블릿 컨테이너(톰캣)에 클라이언트가 요청을 보내면 서블릿 컨테이너는 init()메소드에 의해 초기화된 서블릿의 service() 메소드를 실행시키게 됩니다. 이때 service() 메소드는 각 요청에 대해 새로운 스레드를 만들어서 일을 처리합니다.
+
+그런데 여기서 문제는 ListController와 ShowController는 웹 애플리케이션 전체 구동 과정에서 RequestMapping의 initMapping() 메소드가 실행되는 순간 딱 한번 생성이 되게 됩니다.
+
+즉 웹 애플리케이션에 생성되어있는 ListController와 ShowController 인스턴스는 단 1개 뿐인데 아래 3개의 필드(멤버변수)가 여러개의 쓰레드에 의해 공유되게 됨으로써 문제가 발생할 가능성이 존재하게 된다.
+
+그래서 아래 3개의 필드(멤버변수)를 그 변수를 필요로 하는 각 메소드 안에서 선언하도록 변경하여 주어야 한다.
+
+```
+ListController의 private List<Question> questions; 필드
+ShowController의 private Question question; 필드
+ShowController의 private List<Answer> answers; 필드
+```
+
 
 
 
@@ -151,3 +164,7 @@ Filter 인터페이스 구현체 CharacterEncodingFilter에 @WebFilter(urlPatter
 ##### 9번. AJAX 답변 삭제 기능 관련 문제
 
 해설 생략
+
+##### 10번. 멀티 쓰레드 상황에서 문제가 발생할 가능성 관련 문제
+
+위 답안 참고
