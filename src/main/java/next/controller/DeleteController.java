@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import next.dao.AnswerDao;
+import next.dao.DaoFactory;
 import next.dao.QuestionDao;
 
 import org.slf4j.Logger;
@@ -16,8 +17,8 @@ import core.utils.ServletRequestUtils;
 public class DeleteController extends AbstractController {
 	private static final Logger logger = LoggerFactory.getLogger(DeleteController.class);
 	
-	private AnswerDao answerDao = new AnswerDao();
-	private QuestionDao questionDao = new QuestionDao();
+	private AnswerDao answerDao =  DaoFactory.getAnswerDao();
+	private QuestionDao questionDao =  DaoFactory.getQuestionDao();
 	
 	@Override
 	public ModelAndView execute(HttpServletRequest request,

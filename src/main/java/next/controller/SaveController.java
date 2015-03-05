@@ -3,6 +3,7 @@ package next.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import next.dao.DaoFactory;
 import next.dao.QuestionDao;
 import next.model.Question;
 
@@ -16,7 +17,7 @@ import core.utils.ServletRequestUtils;
 public class SaveController extends AbstractController {
 	private static final Logger logger = LoggerFactory.getLogger(SaveController.class);
 	
-	private QuestionDao questionDao = new QuestionDao();
+	private QuestionDao questionDao =  DaoFactory.getQuestionDao();
 	
 	@Override
 	public ModelAndView execute(HttpServletRequest request,

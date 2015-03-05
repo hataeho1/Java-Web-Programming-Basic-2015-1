@@ -172,3 +172,7 @@ Filter 인터페이스 구현체 CharacterEncodingFilter에 @WebFilter(urlPatter
 ##### 11번. 모바일을 서비스를 위한 질문목록 데이터 JSON API 추가 문제
 
 해설 생략
+
+##### 12번. QuestionDao와 AnswerDao 매 요청마다 인스턴스를 생성하지 않도록 하여 한개의 인스턴스만 유지하기
+
+해설 생략, 커밋로그 확인
