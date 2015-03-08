@@ -27,7 +27,8 @@
 	    </div>
 	</div>    
 
-  	<br /> <a href="/list.next">목록으로</a>
+  	<br /> <a href="/list.next">목록으로</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-questionId="${question.questionId}" data-memberName="${question.writer}">삭제하기</a>
+  	
   	
 	<h3>답변</h3>
 	<div class="answerWrite">

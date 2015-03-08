@@ -5,7 +5,8 @@ import java.util.Map;
 
 import next.controller.AnswerController;
 import next.controller.ApiListController;
-import next.controller.DeleteController;
+import next.controller.DeleteAnswerController;
+import next.controller.DeleteQuestionController;
 import next.controller.ListController;
 import next.controller.SaveController;
 import next.controller.ShowController;
@@ -22,8 +23,9 @@ public class RequestMapping {
 		mappings.put("/show.next", new ShowController());
 		mappings.put("/form.next", new ForwardController("form.jsp"));
 		mappings.put("/save.next", new SaveController());
+		mappings.put("/deletequestion.next", new DeleteQuestionController());
 		mappings.put("/api/addanswer.next", new AnswerController());
-		mappings.put("/api/deleteanswer.next", new DeleteController());
+		mappings.put("/api/deleteanswer.next", new DeleteAnswerController());
 		mappings.put("/api/list.next", new ApiListController());
 		
 		logger.info("Initialized Request Mapping!");
