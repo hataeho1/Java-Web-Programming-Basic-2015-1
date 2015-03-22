@@ -117,7 +117,7 @@ public class Question {
 		// 특정 기능을 수행하기 위한 부가적인 메소드는 private로 감추고
 		// public으로는 1개의 메소드만 노출시켜서 메소드 사용자는 메소드 호출 순서에 따른 영향을 신경쓰지 않아도 되는 좋은 방법인것 같다  
 		
-		if(question.hasNoAnswer()) return true;
+		if(question.hasNoAnswer() && question.hasQuestionOwnership(memberName)) return true;
 		if(question.hasNoAnswer() && !question.hasAnotherAnswerWriter(answerDao)) return false;
 		if(question.hasAnotherAnswerWriter(answerDao)) return false;
 		if(!question.hasQuestionOwnership(memberName)) return false;

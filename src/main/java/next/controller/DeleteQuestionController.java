@@ -18,9 +18,6 @@ import core.utils.ServletRequestUtils;
 public class DeleteQuestionController extends AbstractController {
 	private static final Logger logger = LoggerFactory.getLogger(DeleteQuestionController.class);
 	
-	private AnswerDao answerDao =  DaoFactory.getAnswerDao();
-	private QuestionDao questionDao =  DaoFactory.getQuestionDao();
-	
 	@Override
 	public ModelAndView execute(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -29,14 +26,14 @@ public class DeleteQuestionController extends AbstractController {
 		
 		ModelAndView mav = jsonView();
 		
-		if(!delete(questionId, memberName)) {
+		if(!delete(questionId, memberName, DaoFactory.getAnswerDao(), DaoFactory.getQuestionDao())) {
 			mav.addObject("errorMessage", "질문 삭제를 하기위한 권한이 부족합니다");
 		}
 		
 		return mav;
 	}
 
-	boolean delete(Long questionId, String memberName) {
+	boolean delete(Long questionId, String memberName, AnswerDao answerDao, QuestionDao questionDao) {
 		Question question = questionDao.findById(questionId);
 		if(!question.isDeteteAvailable(memberName, question, answerDao))
 			return false;
