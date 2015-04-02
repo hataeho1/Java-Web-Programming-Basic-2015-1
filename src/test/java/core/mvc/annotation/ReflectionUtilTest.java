@@ -2,6 +2,7 @@ package core.mvc.annotation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import java.lang.reflect.Parameter;
 
 public class ReflectionUtilTest {
 	private static final Logger logger = LoggerFactory.getLogger(ReflectionUtilTest.class);
@@ -60,15 +59,14 @@ public class ReflectionUtilTest {
 		Set<Class<?>> annotatedWithBean = reflections.getTypesAnnotatedWith(Bean.class);
 		Set<Class<?>> annotatedWithController = reflections.getTypesAnnotatedWith(Controller.class);
 		Map<Class<?>, Object> instanceMap = Maps.newHashMap();
-		Set<Class<?>> methodWithInjectMap = Sets.newHashSet();
 		
 		createInstance(annotatedWithBean, instanceMap);
 		createInstance(annotatedWithController, instanceMap);
-		findMethodWithInjectAnnotation(annotatedWithBean, methodWithInjectMap, instanceMap);
-		findMethodWithInjectAnnotation(annotatedWithController, methodWithInjectMap,instanceMap);
+		findMethodWithInjectAnnotation(annotatedWithBean, instanceMap);
+		findMethodWithInjectAnnotation(annotatedWithController,instanceMap);
 	}
 
-	private void findMethodWithInjectAnnotation(Set<Class<?>> classWithAnnotated, Set<Class<?>> methodWithInjectMap, Map<Class<?>, Object> instanceMap) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	private void findMethodWithInjectAnnotation(Set<Class<?>> classWithAnnotated, Map<Class<?>, Object> instanceMap) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		for (Class<?> each : classWithAnnotated) {
 			for (Method method : each.getDeclaredMethods()) {
 				if(!method.isAnnotationPresent(Inject.class)) continue;
